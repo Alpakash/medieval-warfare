@@ -1,0 +1,27 @@
+.item {
+    margin-bottom: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.imageMargin {
+ margin-right: 20px;
+}
+
+/* 70.15 + 19.85 makes 90px */
+.goldMargin {
+    margin-left: 19.85px;
+}
+
+input {
+    max-width: 40px;
+    max-height: 30px;
+    margin: 0 10px;
+}
+
+.error {
+    color: red;
+    font-weight: 400;
+    font-style: italic;
+}

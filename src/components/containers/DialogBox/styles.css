@@ -1,0 +1,59 @@
+/* remove borders in the modal */
+.modal-footer,
+.modal-header {
+  border: 0;
+}
+
+/* X button and h3 styling */
+.modal-header .close {
+  padding: 0;
+  margin: 0;
+  font-size: 30px;
+  opacity: 1;
+}
+
+/* when clicked there is no line around the X */
+.close:focus {
+    outline: none;
+}
+
+/* styles and sizes taken from the given design */
+h3 {
+  font-size: 30px;
+  font-weight: 200;
+}
+
+  .modal-header {
+    margin: 40px 40px 0 40px;
+    padding: 0;
+  }
+
+  .modal-body {
+    margin: 40px 40px 0 40px;
+    padding: 0;
+    font-size: 18px;
+  }
+
+  .modal-footer {
+    margin: 0 40px 40px 0;
+    padding: 0;
+  }
+  
+  .buttonSize {
+    width: 100px;
+    height: 40px;
+    margin: 0;
+    margin-left: 10px;
+  }
+
+/* when clicked on the backdrop the modal uses a handleStaticModalAnimation function which calls a modal-static class and gtx-trans id in the DOM.
+Because of the animation the vertical scrollbar is shown, overflow-y: hidden didn't work. margin-top is the hack.
+https://github.com/react-bootstrap/react-bootstrap/blob/master/src/Modal.tsx */
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 796px;
+    margin-top: 10px;
+  }
+}
+
+
