@@ -11,5 +11,7 @@ export const DECREMENT_MY_GOLD = "DECREMENT_MY_GOLD";
 
 export const GET_STATE = "GET_STATE";
 
-export const BUY_ITEMS = "BUY_ITEMS";
+export const BOUGHT_ITEMS = "BOUGHT_ITEMS";
+
+export const SELL_ITEMS = "SELL_ITEMS";
 export const ADD_TO_CART = "ADD_TO_CART";

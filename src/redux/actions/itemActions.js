@@ -5,7 +5,6 @@ export const addItem = (index, payload) => {
     type: ADD_ITEM,
     index,
     payload,
-    
   };
 };
 

@@ -13,6 +13,10 @@ import {
   incrementGold,
   decrementGold,
 } from "../../../redux/actions/userActions";
+import {
+  sellItems,
+  addToCart,
+} from "./../../../redux/actions/buyActions";
 
 const Box = styled.span`
   padding: 3px 7px;
@@ -29,6 +33,8 @@ const Items = ({
   decrementGold,
   incrementGold,
   totalPrice,
+  sellItems,
+  addToCart,
   items,
   user,
 }) => {
@@ -39,20 +45,22 @@ const Items = ({
       removeItem(item.index, removeOne);
       decrementTotal(item);
       incrementGold(item);
+      sellItems(item)
     }
     setError("");
   };
 
-  const handleIncrementItem = (item, addToCart, user, totalPrice) => {
+  const handleIncrementItem = (item, incrementCart, user) => {
     if (item.quantity > 0) {
       if (item.price > user.balance) {
         setError("You have insufficient gold.");
       }
 
       if (user.balance >= item.price) {
-        addItem(item.index, addToCart);
+        addItem(item.index, incrementCart);
         incrementTotal(item);
         decrementGold(item);
+        addToCart(item);
         setError("");
       }
     }
@@ -126,4 +134,6 @@ export default connect(mapStateToProps, {
   decrementTotal,
   incrementGold,
   decrementGold,
+  sellItems,
+  addToCart
 })(Items);

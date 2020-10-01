@@ -15,9 +15,7 @@ const totalPrice = (state = initialState, action) => {
         amount: state.amount + action.item.price,
       };
 
-    case DECREMENT_TOTAL:
-      console.log(action.item);
-        
+    case DECREMENT_TOTAL:       
           return {
             ...state,
             amount: state.amount - action.item.price,

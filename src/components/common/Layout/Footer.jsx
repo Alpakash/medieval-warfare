@@ -5,9 +5,10 @@ const FooterElement = styled.p`
 position: absolute;
 bottom: 0;
 margin-bottom: 20px;
+left: 40px;
 `;
 
-export const Footer = () => {
+const Footer = () => {
 	return (
     <>
       <footer>
@@ -16,3 +17,5 @@ export const Footer = () => {
     </>
   );
 };
+
+export default Footer;

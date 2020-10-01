@@ -1,14 +1,17 @@
-import { BUY_ITEMS, ADD_TO_CART } from "../constants/types";
-
-const buyItems = (state = [], action) => {
+import { SELL_ITEMS, ADD_TO_CART } from "../constants/types";
+  
+const buy = (state = [], action) => {
   switch (action.type) {
-    case BUY_ITEMS:
-      break;
+    case SELL_ITEMS:
+      const index = state.findIndex(
+        (item) => item.id === action.itemsInCart.id
+      );
+      return [...state.slice(0, index), ...state.slice(index + 1)];
     case ADD_TO_CART:
-      break;
+      return [...state, action.itemsInCart];
     default:
       return state;
   }
 };
 
-export default buyItems;
+export default buy;

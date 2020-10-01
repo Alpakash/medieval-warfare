@@ -1,14 +1,15 @@
-import { BUY_ITEMS, ADD_TO_CART } from '../constants/types';
+import { SELL_ITEMS, ADD_TO_CART } from '../constants/types';
 
-export const inCart = () => {
-    return {
-        type: ADD_TO_CART,
-        itemsInCart
-    }
+export const sellItems = (itemsInCart) => {
+  return {
+    type: SELL_ITEMS,
+    itemsInCart,
+  };
 };
 
-export const buyItems = () => {
-    return {
-        type: BUY_ITEMS,
-    }
-}
+export const addToCart = (itemsInCart) => {
+  return {
+    type: ADD_TO_CART,
+    itemsInCart,
+  };
+};
