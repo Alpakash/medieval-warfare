@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 const Home = ({ user, buy, dialogBox }) => {
   var bought = buy.reduce((prev, cur) => {
-    prev[cur.name] = (prev[cur.name] || 0) + 1;
+    prev[cur.name] = (prev[cur.name] ?? 0) + 1;
     return prev;
   }, {});
 

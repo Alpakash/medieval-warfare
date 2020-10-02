@@ -6,13 +6,17 @@ import TotalAmount from "../../TotalAmount";
 import { connect } from "react-redux";
 import { ReactComponent as GoldSVG } from "../../../assets/images/svg-icons/ingots.svg";
 import { showDialog } from "../../../redux/actions/dialogActions";
-import { boughtItems } from './../../../redux/actions/userActions';
+import { boughtItems } from "./../../../redux/actions/userActions";
 
-const DialogBox = ({ dialogBox, showDialog, boughtItems, user }) => {
-const handleBuy = () => {
-  boughtItems();
-  showDialog(false);
-}
+const DialogBox = ({ dialogBox, showDialog, boughtItems, user, buy }) => {
+  let itemsInCart = buy?.length > 0;
+  
+  const handleBuy = () => {
+    if (itemsInCart) {
+      boughtItems();
+      showDialog(false);
+    }
+  };
 
   return (
     <Modal
@@ -22,6 +26,7 @@ const handleBuy = () => {
       keyboard={false}
       animation={false}
       centered
+      backdropClassName={user.balance === 420 ? "fourtwenty" : ""}
     >
       <Modal.Header className="removeBorder" closeButton>
         <h3>Order</h3>
@@ -35,7 +40,14 @@ const handleBuy = () => {
         <TotalAmount />
       </Modal.Body>
       <Modal.Footer className="removeBorder">
-        <Button variant="primary" className="buttonSize" onClick={() => handleBuy()}>
+        <Button
+          variant="primary"
+          className={
+            user.balance === 420 ? "buttonSize fourtwenty" : "buttonSize"
+          }
+          disabled={!itemsInCart}
+          onClick={() => handleBuy()}
+        >
           Buy
         </Button>
 
@@ -54,6 +66,7 @@ const handleBuy = () => {
 const mapStateToProps = (state) => ({
   dialogBox: state.dialogBox,
   user: state.user,
+  buy: state.buy,
 });
 
 export default connect(mapStateToProps, { showDialog, boughtItems })(DialogBox);

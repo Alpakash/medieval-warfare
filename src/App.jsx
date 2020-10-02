@@ -4,10 +4,15 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Footer from "./components/common/Layout/Footer";
 import DialogBox from "./components/containers/DialogBox";
 import NavbarComponent from "./components/common/Layout/Navbar";
-import Home from './components/containers/Home';
+import Home from "./components/containers/Home";
 import Avatar from './components/Avatar';
 
 const App = ({ user }) => {
+    const routes = [
+      { path: "/avatar", component: Avatar },
+      { path: "/", component: Home },
+    ];
+
   return (
     <Router>
       <NavbarComponent user={user} />
@@ -15,12 +20,9 @@ const App = ({ user }) => {
       {/* A <Switch> looks through its children <Route>s and
           renders the first one that matches the current URL. */}
       <Switch>
-        <Route path="/avatar">
-          <Avatar />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
+        {routes.map((route, index)=> (
+          <Route key={index} path={route.path} component={route.component} />
+        ))}
       </Switch>
       <Footer />
     </Router>

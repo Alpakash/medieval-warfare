@@ -4,7 +4,7 @@ import { ReactComponent as GoldSVG } from "../../../assets/images/svg-icons/ingo
 import { ReactComponent as AvatarSVG } from "../../../assets/images/svg-icons/gamer.svg";
 import { showDialog } from "../../../redux/actions/dialogActions";
 import { connect } from 'react-redux';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './styles.css';
 
 const NavbarComponent = ({ user, showDialog }) => {
@@ -13,18 +13,18 @@ const NavbarComponent = ({ user, showDialog }) => {
       <Container>
         <Navbar.Brand href="#home">Medieval Warfare</Navbar.Brand>
         <Nav className="mr-auto">
-          <Link to="/" className="nav-link" >Home</Link>
-          <Link to="/avatar" className="nav-link">Avatar</Link>
+          <NavLink to="/" exact={true} className="nav-link">Home</NavLink>
+          <NavLink to="/avatar" className="nav-link">Avatar</NavLink>
           <Nav.Link className="buyButton" onClick={() => showDialog(true)}>Buy</Nav.Link>
         </Nav>
         <span className="navbar-right navbar-text mr-4">
           <GoldSVG width="40px" height="40px" />
           <span className="d-flex">{user?.balance}</span>
         </span>
-        <a href="/avatar" className="navbar-right navbar-text">
+        <NavLink to="/avatar" className="navbar-right navbar-text">
           <AvatarSVG width="40px" height="40px" />
           <span className="d-flex">{user?.name}</span>
-        </a>
+        </NavLink>
       </Container>
     </Navbar>
   );
