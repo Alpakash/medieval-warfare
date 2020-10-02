@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { BigText, ItemText } from '../../common/Typography';
 
 const Home = ({ user, buy, dialogBox }) => {
   var bought = buy.reduce((prev, cur) => {
@@ -10,20 +11,20 @@ const Home = ({ user, buy, dialogBox }) => {
   return (
     <>
       <div className="container body-content mt-5">
-        <h2 className="mb-4">Hello, {user.login}</h2>
+        <BigText>Hello, {user.login}</BigText>
         <ul>
-        <h2 className="mb-4">Inventory</h2>
+        <BigText>Inventory</BigText>
           {user.bought && !dialogBox.show 
           ? (Object.entries(bought).map(([key, value], index) => {
               return (
                   <li key={index}>
-                    <h5>
+                    <ItemText>
                       {value}x {key}
-                    </h5>
+                    </ItemText>
                   </li>
               );
             }))
-           : <h5>You have no items in your inventory, buy items!</h5>
+           : !user.bought ? <ItemText>You have no items in your inventory, buy items!</ItemText> : <ItemText>Editing...</ItemText>
           }
         </ul>
       </div>

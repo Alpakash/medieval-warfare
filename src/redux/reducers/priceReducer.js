@@ -1,6 +1,7 @@
 import {
   INCREMENT_TOTAL,
-  DECREMENT_TOTAL
+  DECREMENT_TOTAL,
+  CHANGE_TOTAL,
 } from "../constants/types";
 
 const initialState = {
@@ -20,6 +21,11 @@ const totalPrice = (state = initialState, action) => {
             ...state,
             amount: state.amount - action.item.price,
           };
+    case CHANGE_TOTAL:
+      return {
+        ...state,
+        amount: state.amount = action.item.price * action.changeCart
+      }
     default:
       return state;
   }

@@ -5,13 +5,9 @@ import Footer from "./components/common/Layout/Footer";
 import DialogBox from "./components/containers/DialogBox";
 import NavbarComponent from "./components/common/Layout/Navbar";
 import Home from "./components/containers/Home";
-import Avatar from './components/Avatar';
 
 const App = ({ user }) => {
-    const routes = [
-      { path: "/avatar", component: Avatar },
-      { path: "/", component: Home },
-    ];
+  const routes = [{ path: "/", component: Home }];
 
   return (
     <Router>
@@ -20,7 +16,7 @@ const App = ({ user }) => {
       {/* A <Switch> looks through its children <Route>s and
           renders the first one that matches the current URL. */}
       <Switch>
-        {routes.map((route, index)=> (
+        {routes.map((route, index) => (
           <Route key={index} path={route.path} component={route.component} />
         ))}
       </Switch>

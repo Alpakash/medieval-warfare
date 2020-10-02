@@ -1,12 +1,18 @@
 .buyButton {
-  background-color: #4CAF50;
-  color: white!important;
-  width: 100px;
+  background-color: #4caf50;
+  color: white !important;
+  width: 60px;
   text-align: center;
   margin-left: 10px;
+  border-radius: 5px;
 }
 
 .buyButton:hover {
-      background-color: #66bc69;
+  background-color: #66bc69;
+}
 
+@media only screen and (max-width: 480px) {
+  .mobile-hide {
+    display: none;
+  }
 }

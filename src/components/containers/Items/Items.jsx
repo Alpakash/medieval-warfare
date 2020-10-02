@@ -1,28 +1,33 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import "./styles.css";
+import { Item, Image, goldMargin, Input, Error, ItemsParent, Quantity } from "./styles.js";
 import minus from "../../../assets/images/icons/minus.png";
 import plus from "../../../assets/images/icons/plus.png";
 import { connect } from "react-redux";
-import { addItem, removeItem } from "../../../redux/actions/itemActions";
+import {
+  addItem,
+  removeItem,
+  inputChanges
+} from "../../../redux/actions/itemActions";
 import {
   incrementTotal,
   decrementTotal,
+  changeTotal
 } from "../../../redux/actions/priceActions";
 import {
   incrementGold,
   decrementGold,
 } from "../../../redux/actions/userActions";
-import {
-  sellItems,
-  addToCart,
-} from "./../../../redux/actions/buyActions";
+import { sellItems, addToCart } from "./../../../redux/actions/buyActions";
+import { Text } from '../../common/Typography';
 
 const Box = styled.span`
-  padding: 3px 7px;
+  height: 30px;
+  width: 30px;
   background-color: lightgrey;
   display: flex;
   align-items: center;
+  justify-content: center
 `;
 
 const Items = ({
@@ -30,34 +35,37 @@ const Items = ({
   removeItem,
   incrementTotal,
   decrementTotal,
+  changeTotal,
   decrementGold,
   incrementGold,
-  totalPrice,
   sellItems,
   addToCart,
+  inputChanges,
   items,
   user,
 }) => {
   const [error, setError] = useState(null);
 
-  const handleDecrementItem = (item, removeOne) => {
+  // handle removing item from cart by dispatching actions
+  const handleDecrementItem = (item, removeOnCart) => {
     if (item.quantity && item.inCart > 0) {
-      removeItem(item.index, removeOne);
+      removeItem(item.index, removeOnCart);
       decrementTotal(item);
       incrementGold(item);
-      sellItems(item)
+      sellItems(item);
     }
     setError("");
   };
 
-  const handleIncrementItem = (item, incrementCart, user) => {
+  // handle adding item from cart by dispatching actions
+  const handleIncrementItem = (item, addOneCart, user) => {
     if (item.quantity > 0) {
       if (item.price > user.balance) {
         setError("You have insufficient gold.");
       }
 
       if (user.balance >= item.price) {
-        addItem(item.index, incrementCart);
+        addItem(item.index, addOneCart);
         incrementTotal(item);
         decrementGold(item);
         addToCart(item);
@@ -66,58 +74,60 @@ const Items = ({
     }
   };
 
+  // input field not working correctly
+  const handleInputItem = (item, changeCart, user) => {
+    if (user.balance >= item.price * Number(changeCart)) {
+      inputChanges(item.index, Number(changeCart));
+      // changeTotal(item, Number(changeCart));
+      // changeGold(item, Number(changeCart));
+      addToCart(item);
+      setError("");
+    } else {
+      setError("You have insufficient gold to buy that amount of items...");
+    }
+  };
+
   return (
-    <>
+    <ItemsParent>
       {items.map((item) => (
-        <div key={item.id} className="d-flex justify-content-between">
-          <div className="item">
-            <img
+        <div
+          key={item.id}
+          className="d-flex justify-content-between itemMargin"
+        >
+          <Item>
+            <Image
               src={require(`../../../assets/images/items/${item.image}`)}
-              className="imageMargin"
               alt={item.name}
             />
-            {item.name}
-            &nbsp; <strong>/</strong> &nbsp;
-            <span>{item.quantity} items left</span>
-          </div>
+            <Text>{item.name}</Text>
+            <Quantity>
+              &nbsp; <strong>/</strong> &nbsp;
+              <Text>{item.quantity} items left</Text>
+            </Quantity>
+          </Item>
 
           <div className="d-flex align-self-center">
-            <Box>
-              <img
-                src={minus}
-                alt="Minus"
-                onClick={() => handleDecrementItem(item, 1)}
-              />
+            <Box onClick={() => handleDecrementItem(item, 1)}>
+              <img src={minus} alt="Minus" />
             </Box>
-            <input
+            <Input
               type="text"
-              value={item.inCart}
-              onChange={(e) =>
-                handleIncrementItem(
-                  item,
-                  Number(e.target.value),
-                  user,
-                  totalPrice
-                )
-              }
+              placeholder={item.inCart === 0 ? "" : item.inCart}
+              onChange={(e) => handleInputItem(item, e.target.value, user)}
               className="text-center"
               maxLength="3"
             />
 
-            <Box>
-              <img
-                src={plus}
-                alt="Plus"
-                onClick={() => handleIncrementItem(item, 1, user, totalPrice)}
-              />
+            <Box onClick={() => handleIncrementItem(item, 1, user)}>
+              <img src={plus} alt="Plus" />
             </Box>
 
-            <span className="goldMargin">{item.price} gold</span>
+            <Text style={goldMargin}>{item.price} gold</Text>
           </div>
         </div>
       ))}
-      <span className="error">{error}</span>
-    </>
+      <Error>{error}</Error>
+    </ItemsParent>
   );
 };
 
@@ -127,13 +137,16 @@ const mapStateToProps = (state) => ({
   totalPrice: state.totalPrice,
 });
 
+// connect the redux store to component
 export default connect(mapStateToProps, {
   addItem,
   removeItem,
   incrementTotal,
   decrementTotal,
+  changeTotal,
   incrementGold,
   decrementGold,
   sellItems,
-  addToCart
+  addToCart,
+  inputChanges,
 })(Items);

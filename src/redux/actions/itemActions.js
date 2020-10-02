@@ -1,4 +1,4 @@
-import { ADD_ITEM, REMOVE_ITEM } from "../constants/types";
+import { ADD_ITEM, REMOVE_ITEM, INPUT_CHANGE } from "../constants/types";
 
 export const addItem = (index, payload) => {
   return {
@@ -13,5 +13,13 @@ export const removeItem = (index, payload) => {
     type: REMOVE_ITEM,
     index,
     payload
+  };
+};
+
+export const inputChanges = (index, payload) => {
+  return {
+    type: INPUT_CHANGE,
+    index,
+    payload,
   };
 };
