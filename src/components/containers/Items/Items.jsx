@@ -1,25 +1,34 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Item, Image, goldMargin, Input, Error, ItemsParent, Quantity } from "./styles.js";
+import {
+  Item,
+  Image,
+  goldMargin,
+  Input,
+  Error,
+  ItemsParent,
+  Quantity,
+} from "./styles.js";
 import minus from "../../../assets/images/icons/minus.png";
 import plus from "../../../assets/images/icons/plus.png";
 import { connect } from "react-redux";
 import {
   addItem,
   removeItem,
-  inputChanges
+  inputChanges,
 } from "../../../redux/actions/itemActions";
 import {
   incrementTotal,
   decrementTotal,
-  changeTotal
+  changeTotal,
 } from "../../../redux/actions/priceActions";
 import {
   incrementGold,
   decrementGold,
+  changeGold,
 } from "../../../redux/actions/userActions";
 import { sellItems, addToCart } from "./../../../redux/actions/buyActions";
-import { Text } from '../../common/Typography';
+import { Text } from "../../common/Typography";
 
 const Box = styled.span`
   height: 30px;
@@ -27,7 +36,7 @@ const Box = styled.span`
   background-color: lightgrey;
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
 `;
 
 const Items = ({
@@ -36,12 +45,14 @@ const Items = ({
   incrementTotal,
   decrementTotal,
   changeTotal,
+  changeGold,
   decrementGold,
   incrementGold,
   sellItems,
   addToCart,
   inputChanges,
   items,
+  totalPrice,
   user,
 }) => {
   const [error, setError] = useState(null);
@@ -75,11 +86,11 @@ const Items = ({
   };
 
   // input field not working correctly
-  const handleInputItem = (item, changeCart, user) => {
+  const handleInputItem = (item, changeCart, user, total) => {
     if (user.balance >= item.price * Number(changeCart)) {
-      inputChanges(item.index, Number(changeCart));
-      // changeTotal(item, Number(changeCart));
-      // changeGold(item, Number(changeCart));
+      inputChanges(item, Number(changeCart));
+      changeTotal(item, Number(changeCart));
+      changeGold(item, Number(changeCart), total);
       addToCart(item);
       setError("");
     } else {
@@ -112,8 +123,10 @@ const Items = ({
             </Box>
             <Input
               type="text"
-              placeholder={item.inCart === 0 ? "" : item.inCart}
-              onChange={(e) => handleInputItem(item, e.target.value, user)}
+              value={item.inCart === 0 ? "" : item.inCart}
+              onChange={(e) =>
+                handleInputItem(item, e.target.value, user, totalPrice)
+              }
               className="text-center"
               maxLength="3"
             />
@@ -144,6 +157,7 @@ export default connect(mapStateToProps, {
   incrementTotal,
   decrementTotal,
   changeTotal,
+  changeGold,
   incrementGold,
   decrementGold,
   sellItems,

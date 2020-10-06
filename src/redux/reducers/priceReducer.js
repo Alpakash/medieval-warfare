@@ -24,7 +24,7 @@ const totalPrice = (state = initialState, action) => {
     case CHANGE_TOTAL:
       return {
         ...state,
-        amount: state.amount = action.item.price * action.changeCart
+        amount: action.item.price * action.changeCart
       }
     default:
       return state;

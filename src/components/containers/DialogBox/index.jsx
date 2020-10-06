@@ -35,7 +35,7 @@ const DialogBox = ({ dialogBox, showDialog, boughtItems, user, buy }) => {
     })
       .then((response) => response.json())
       .then((data) => console.log(data))
-      .catch((err) => {
+      .catch(() => {
         // catch the failed request and set the error state to show in UI
         setRequestError({
           error:
@@ -52,7 +52,6 @@ const DialogBox = ({ dialogBox, showDialog, boughtItems, user, buy }) => {
       keyboard={false}
       animation={false}
       centered
-      backdropClassName={user.balance === 420 ? "fourtwenty" : ""}
     >
       <Modal.Header className="removeBorder" closeButton>
         <DialogTitle>Order</DialogTitle>
@@ -65,22 +64,11 @@ const DialogBox = ({ dialogBox, showDialog, boughtItems, user, buy }) => {
         <Items />
         <span className="error">{requestError.error}</span>
         <TotalAmount />
-        {/* Easter egg when the user balance is 420 gold */}
-        {user.balance === 420 ? (
-          <center>
-          <h4>420 gold!</h4>
-            <img className="mb-4" height="400px" src={snoopdogg} alt="snoop" />
-          </center>
-        ) : (
-          null
-        )}
       </Modal.Body>
       <Modal.Footer className="removeBorder">
         <Button
           variant="primary"
-          className={
-            user.balance === 420 ? "buttonSize fourtwenty" : "buttonSize"
-          }
+          className="buttonSize"
           // didn't make the button disabled when total price exceeds the users gold,
           // because the user is already restricted from adding more items if there is not enough gold
           disabled={!itemsInCart}

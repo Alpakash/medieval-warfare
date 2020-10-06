@@ -14,13 +14,14 @@ export const decrementGold = (item) => {
   };
 };
 
-// export const changeGold = (item, changeCart) => {
-//   return {
-//     type: CHANGE_MY_GOLD,
-//     item,
-//     changeCart
-//   }
-// }
+export const changeGold = (item, changeCart, totalPrice) => {
+  return {
+    type: CHANGE_MY_GOLD,
+    item,
+    changeCart,
+    totalPrice
+  }
+}
 
 export const boughtItems = (bought) => {
   return {

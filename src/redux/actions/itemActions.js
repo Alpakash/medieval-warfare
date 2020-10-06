@@ -16,10 +16,11 @@ export const removeItem = (index, payload) => {
   };
 };
 
-export const inputChanges = (index, payload) => {
+export const inputChanges = (item, payload, total) => {
   return {
     type: INPUT_CHANGE,
-    index,
+    item,
     payload,
+    total
   };
 };

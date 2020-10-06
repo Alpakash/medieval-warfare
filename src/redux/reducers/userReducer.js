@@ -25,12 +25,25 @@ const user = (state = initialState, action) => {
         ...state,
         balance: state.balance - action.item.price,
       };
-    // case CHANGE_MY_GOLD:
-    //   return {
-    //     ...state,
-    //     balance:          
-    //       state.balance - action.item.price * action.changeCart,
-    //   };
+    case CHANGE_MY_GOLD:
+      console.log(
+        "unfortunately couldn't get the gold working completely correct on input change!"
+      );
+
+      action.changeCart < action.item.inCart
+      ? console.log((action.item.inCart - action.changeCart) * action.item.price)
+      : console.log(action.changeCart * action.item.price);
+
+      return {
+        ...state,
+        balance:
+          action.item.price * action.changeCart <= action.totalPrice.amount
+            ? action.changeCart === 0
+              ? 1200
+              : state.balance + action.item.price * action.changeCart
+            : state.balance +
+              (action.item.inCart - action.changeCart) * action.item.price,
+      };
     case BOUGHT_ITEMS:
       return {
         ...state,

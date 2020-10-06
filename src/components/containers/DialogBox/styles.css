@@ -55,17 +55,6 @@ https://github.com/react-bootstrap/react-bootstrap/blob/master/src/Modal.tsx */
   }
 }
 
-.fourtwenty {
-  background-color: green;
-  border: green;
-}
-
-
-.fourtwenty:hover {
-  background-color: #66bc69;
-  border: #66bc69;
-}
-
 .error {
     color: red;
     font-weight: 400;

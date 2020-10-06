@@ -81,19 +81,19 @@ const items = (state = initialState, action) => {
     case INPUT_CHANGE:
       return state.map((item, index) => {
         // check if the item.index is equal to the index in items state
-        if (index === action.index) {
+        if (index === action.item.index) {
           return {
             ...item,
             quantity:
               item.inCart > action.payload
-              // the quantity will be updated: 
-                // previousNumber minus getOnChange number is deccremented quantity 
-                ? item.quantity + item.inCart - action.payload
-                // increment quantity
-                // getOnChange number minus previousNumber is incremented quantity
-                : item.quantity - (action.payload - item.inCart),
-                // update the state cart to onChange number
-            inCart: item.inCart = action.payload,
+                ? // the quantity will be updated:
+                  // the previous number saved in the cart minus the new input number is deccremented quantity
+                  item.quantity + item.inCart - action.payload
+                : // increment quantity
+                  // getOnChange number minus previousNumber is incremented quantity
+                  item.quantity - (action.payload - item.inCart),
+            // update the state cart to onChange number
+            inCart: action.payload,
           };
         }
         return {
