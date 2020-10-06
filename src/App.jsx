@@ -6,12 +6,12 @@ import DialogBox from "./components/containers/DialogBox";
 import NavbarComponent from "./components/common/Layout/Navbar";
 import Home from "./components/containers/Home";
 
-const App = ({ user }) => {
+const App = ({ user, buy }) => {
   const routes = [{ path: "/", component: Home }];
 
   return (
     <Router>
-      <NavbarComponent user={user} />
+      <NavbarComponent user={user} buy={buy} />
       <DialogBox />
       {/* A <Switch> looks through its children <Route>s and
           renders the first one that matches the current URL. */}
@@ -27,6 +27,7 @@ const App = ({ user }) => {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  buy: state.buy
 });
 
 export default connect(mapStateToProps, null)(App);

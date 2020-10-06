@@ -1,4 +1,4 @@
-import { SELL_ITEMS, ADD_TO_CART } from "../constants/types";
+import { SELL_ITEMS, ADD_TO_CART, GOLD_SPEND } from "../constants/types";
   
 const buy = (state = [], action) => {
   switch (action.type) {
@@ -11,7 +11,13 @@ const buy = (state = [], action) => {
       // paste te last part after the indexedItem in Array 
       return [...state.slice(0, index), ...state.slice(index + 1)];
     case ADD_TO_CART:
-      return [...state, action.itemsInCart];
+      // hack to push the input value to itemsInCart and show amount in inventory
+      for (let i = 1; i < action.inputValue; i++) state.push(action.itemsInCart);
+
+      return [
+        ...state,
+        action.itemsInCart,
+      ];
     default:
       return state;
   }

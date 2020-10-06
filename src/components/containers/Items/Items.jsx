@@ -71,11 +71,11 @@ const Items = ({
   // handle adding item from cart by dispatching actions
   const handleIncrementItem = (item, addOneCart, user) => {
     if (item.quantity > 0) {
-      if (item.price > user.balance) {
+      if (item.price > user.cartBalance) {
         setError("You have insufficient gold.");
       }
 
-      if (user.balance >= item.price) {
+      if (user.cartBalance >= item.price) {
         addItem(item.index, addOneCart);
         incrementTotal(item);
         decrementGold(item);
@@ -87,11 +87,11 @@ const Items = ({
 
   // input field not working correctly
   const handleInputItem = (item, changeCart, user, total) => {
-    if (user.balance >= item.price * Number(changeCart)) {
+    if (user.cartBalance >= item.price * Number(changeCart)) {
       inputChanges(item, Number(changeCart));
       changeTotal(item, Number(changeCart));
       changeGold(item, Number(changeCart), total);
-      addToCart(item);
+      addToCart(item, Number(changeCart), user);
       setError("");
     } else {
       setError("You have insufficient gold to buy that amount of items...");

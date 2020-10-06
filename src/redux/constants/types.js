@@ -10,6 +10,7 @@ export const CHANGE_TOTAL = "CHANGE_TOTAL";
 export const INCREMENT_MY_GOLD = "INCREMENT_MY_GOLD";
 export const DECREMENT_MY_GOLD = "DECREMENT_MY_GOLD";
 export const CHANGE_MY_GOLD = "CHANGE_MY_GOLD";
+export const GOLD_SPEND = "GOLD_SPEND";
 
 export const GET_STATE = "GET_STATE";
 

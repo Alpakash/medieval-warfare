@@ -43,7 +43,7 @@ const items = (state = initialState, action) => {
   switch (action.type) {
     case ADD_ITEM:
       return state.map((item, index) => {
-        // check if the item.index is equal to the index in items state 
+        // check if the item.index is equal to the index in items state
         if (index === action.index) {
           // add items to cart if there are more then 0 items in cart
           // and if the item is available
@@ -99,7 +99,7 @@ const items = (state = initialState, action) => {
         return {
           ...item,
         };
-      })
+      });
     default:
       return state;
   }

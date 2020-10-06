@@ -7,9 +7,10 @@ export const sellItems = (itemsInCart) => {
   };
 };
 
-export const addToCart = (itemsInCart) => {
+export const addToCart = (itemsInCart, inputValue) => {
   return {
     type: ADD_TO_CART,
     itemsInCart,
+    inputValue
   };
 };
