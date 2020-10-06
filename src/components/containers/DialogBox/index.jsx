@@ -6,15 +6,22 @@ import TotalAmount from "../../TotalAmount";
 import { connect } from "react-redux";
 import { ReactComponent as GoldSVG } from "../../../assets/images/svg-icons/ingots.svg";
 import { showDialog } from "../../../redux/actions/dialogActions";
-import { boughtItems } from "./../../../redux/actions/userActions";
-import { spendGold } from "./../../../redux/actions/userActions";
+import { boughtItems, spendGold, cartGoldEqualToCurrentGold } from "./../../../redux/actions/userActions";
 import { DialogTitle } from "../../common/Typography";
 
 let count = 0;
 
-const DialogBox = ({ dialogBox, showDialog, boughtItems, user, buy, spendGold, totalPrice }) => {
+const DialogBox = ({
+  dialogBox,
+  showDialog,
+  boughtItems,
+  user,
+  spendGold,
+  totalPrice,
+  cartGoldEqualToCurrentGold,
+}) => {
   const [requestError, setRequestError] = useState({});
-  let itemsInCart = buy?.length > 0;
+  let itemsInCart = user.balance !== user.cartBalance;
 
   const handleBuy = () => {
     count++;
@@ -25,9 +32,14 @@ const DialogBox = ({ dialogBox, showDialog, boughtItems, user, buy, spendGold, t
     if (itemsInCart) {
       boughtItems();
       showDialog(false);
-      spendGold(totalPrice)
+      spendGold(totalPrice);
       setRequestError("");
     }
+  };
+
+  const handleHideDialog = () => {
+    showDialog(false);
+    cartGoldEqualToCurrentGold();
   };
 
   const simulateFailureRequest = () => {
@@ -48,7 +60,7 @@ const DialogBox = ({ dialogBox, showDialog, boughtItems, user, buy, spendGold, t
   return (
     <Modal
       show={dialogBox.show}
-      onHide={() => showDialog(false)}
+      onHide={() => handleHideDialog()}
       backdrop="static"
       keyboard={false}
       animation={false}
@@ -60,7 +72,7 @@ const DialogBox = ({ dialogBox, showDialog, boughtItems, user, buy, spendGold, t
       <Modal.Body>
         <span className="d-flex justify-content-end">
           <GoldSVG width="25px" height="25px" className="mr-2" />
-          {user.cartBalance}
+          <strong>{user.cartBalance}</strong>&nbsp;in cart
         </span>
         <Items />
         <span className="error">{requestError.error}</span>
@@ -81,7 +93,7 @@ const DialogBox = ({ dialogBox, showDialog, boughtItems, user, buy, spendGold, t
         <Button
           variant="secondary"
           className="buttonSize"
-          onClick={() => showDialog(false)}
+          onClick={() => handleHideDialog()}
         >
           Cancel
         </Button>
@@ -93,9 +105,13 @@ const DialogBox = ({ dialogBox, showDialog, boughtItems, user, buy, spendGold, t
 const mapStateToProps = (state) => ({
   dialogBox: state.dialogBox,
   user: state.user,
-  buy: state.buy,
-  totalPrice: state.totalPrice
+  totalPrice: state.totalPrice,
 });
 
 // connect the redux store to component
-export default connect(mapStateToProps, { showDialog, boughtItems, spendGold })(DialogBox);
+export default connect(mapStateToProps, {
+  showDialog,
+  boughtItems,
+  spendGold,
+  cartGoldEqualToCurrentGold,
+})(DialogBox);

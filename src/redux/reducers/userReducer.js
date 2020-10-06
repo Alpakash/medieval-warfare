@@ -3,7 +3,8 @@ import {
   DECREMENT_MY_GOLD,
   CHANGE_MY_GOLD,
   BOUGHT_ITEMS,
-  GOLD_SPEND
+  GOLD_SPEND,
+  CART_GOLD_TO_GOLD
 } from "../constants/types";
 
 const initialState = {
@@ -28,10 +29,6 @@ const user = (state = initialState, action) => {
         cartBalance: state.cartBalance - action.item.price,
       };
     case CHANGE_MY_GOLD:
-      console.log(
-        "unfortunately couldn't get the gold working completely correct on input change!"
-      );
-
       let newTotalPrice =
         action.item.price * (action.item.inCart - action.changeCart);
 
@@ -53,8 +50,12 @@ const user = (state = initialState, action) => {
     case GOLD_SPEND:
       return {
         ...state, 
-        balance: state.balance = state.cartBalance
+        balance: state.cartBalance
       };
+    case CART_GOLD_TO_GOLD: 
+    return {
+      ...state,
+    }
     default:
       return state;
   }

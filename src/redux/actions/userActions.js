@@ -1,4 +1,11 @@
-import { INCREMENT_MY_GOLD, DECREMENT_MY_GOLD, CHANGE_MY_GOLD, BOUGHT_ITEMS, GOLD_SPEND } from "../constants/types";
+import {
+  INCREMENT_MY_GOLD,
+  DECREMENT_MY_GOLD,
+  CHANGE_MY_GOLD,
+  BOUGHT_ITEMS,
+  GOLD_SPEND,
+  CART_GOLD_TO_GOLD
+} from "../constants/types";
 
 export const incrementGold = (item) => {
   return {
@@ -36,4 +43,11 @@ export const spendGold = (totalPrice) => {
     totalPrice,
   };
 };
+
+export const cartGoldEqualToCurrentGold = (items) => {
+  return {
+    type: CART_GOLD_TO_GOLD,
+    items
+  };
+}
 

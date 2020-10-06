@@ -8,7 +8,7 @@ const initialState = [
     price: 120,
     quantity: 20,
     image: "battle_axe.png",
-    inCart: 0
+    inCart: 0,
   },
   {
     index: 1,
@@ -17,7 +17,7 @@ const initialState = [
     price: 150,
     quantity: 50,
     image: "wooden_shield.png",
-    inCart: 0
+    inCart: 0,
   },
   {
     index: 2,
@@ -26,7 +26,7 @@ const initialState = [
     price: 110,
     quantity: 100,
     image: "bronze_sword.png",
-    inCart: 0
+    inCart: 0,
   },
   {
     index: 3,
@@ -35,7 +35,7 @@ const initialState = [
     price: 310,
     quantity: 10,
     image: "longsword.png",
-    inCart: 0
+    inCart: 0,
   },
 ];
 

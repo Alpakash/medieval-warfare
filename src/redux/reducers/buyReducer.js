@@ -1,4 +1,4 @@
-import { SELL_ITEMS, ADD_TO_CART, GOLD_SPEND } from "../constants/types";
+import { SELL_ITEMS, ADD_TO_CART } from "../constants/types";
   
 const buy = (state = [], action) => {
   switch (action.type) {

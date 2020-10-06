@@ -17,8 +17,8 @@ const NavbarComponent = ({ user, showDialog }) => {
           <Nav.Link className="buyButton" onClick={() => showDialog(true)}>Buy</Nav.Link>
         </Nav>
         <span className="navbar-right navbar-text mr-4 mobile-hide">
-          <GoldSVG width="40px" height="40px" />
-          <span className="d-flex">{user?.balance}</span>
+          <GoldSVG width="40px" height="40px" className="ml-5" />
+          <span className="d-flex ml-2"><strong>{user?.balance}</strong>&nbsp; current gold</span>
         </span>
         <div className="navbar-right navbar-text">
           <AvatarSVG width="40px" height="40px" />
