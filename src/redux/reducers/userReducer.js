@@ -30,10 +30,6 @@ const user = (state = initialState, action) => {
         "unfortunately couldn't get the gold working completely correct on input change!"
       );
 
-      action.changeCart < action.item.inCart
-      ? console.log((action.item.inCart - action.changeCart) * action.item.price)
-      : console.log(action.changeCart * action.item.price);
-
       return {
         ...state,
         balance:

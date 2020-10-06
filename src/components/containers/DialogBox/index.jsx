@@ -8,7 +8,6 @@ import { ReactComponent as GoldSVG } from "../../../assets/images/svg-icons/ingo
 import { showDialog } from "../../../redux/actions/dialogActions";
 import { boughtItems } from "./../../../redux/actions/userActions";
 import { DialogTitle } from "../../common/Typography";
-import snoopdogg from '../../../assets/images/items/snoop.jpg'
 
 let count = 0;
 
