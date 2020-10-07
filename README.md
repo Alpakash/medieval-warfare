@@ -21,11 +21,11 @@ A react application where I use Redux to interact with the global state. Items c
 - react-router-dom
 
 ## :heavy_check_mark: To-do ##
-1. Implement react-router for components
-2. Fix the cart input
-3. Make buying items in the cart possible
-4. Handle the failed error request
-5. Make a pull-request for the react-bootstrap library on GitHub (animation fix)
-6. Create an easter egg in the app
-7. Implement user authentication (MongoDB)
-8. different view on screen width less then 480px
+1. *DONE* ~~Implement react-router for components~~
+2. *DONE* ~~Fix the cart input~~
+3. *DONE* ~~Make buying items in the cart possible~~
+4. *DONE* ~~Handle the failed error request~~
+5. *DONE* ~~different view on screen width less then 480px~~
+6. *DELETED* ~~Create an easter egg in the app~~
+7. Implement user authentication (MongoDB or Auth0)
+8. Make avatar component with equipped items
