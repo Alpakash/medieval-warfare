@@ -12,7 +12,7 @@ const Footer = () => {
 	return (
     <>
       <footer>
-        <FooterElement>&copy; 2020 - New Day at Work</FooterElement>
+        <FooterElement>&copy; 2020 ~ 2023</FooterElement>
       </footer>
     </>
   );

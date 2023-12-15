@@ -20,7 +20,6 @@ const Home = ({ user, buy, dialogBox }) => {
         : isAuthenticated 
         ? (
           <>
-            <h5><strong>{users?.name}</strong>... your name is loaded from the Auth0 authentication!</h5>
             <br/>
             <ul>
               <BigText>Inventory</BigText>
@@ -38,14 +37,14 @@ const Home = ({ user, buy, dialogBox }) => {
                 })
               ) : !user.bought ? (
                 <ItemText>
-                  You have no items in your inventory, buy items!
+                  You have no items in your inventory, {users?.name}, buy some items!
                 </ItemText>
               ) : (
                 <ItemText>Editing...</ItemText>
               )}
             </ul>
           </>
-        ) : <BigText>Login to use the app...</BigText>}
+        ) : <BigText>Login to use the app and buy some awesome items!</BigText>}
       </div>
     </>
   );

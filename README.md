@@ -10,7 +10,9 @@
 
 A react application where I use Redux to interact with the global state. Items can be put in the cart and bought with the users gold. After purchase you can see your bought items in your inventory. 
 
-
+## How to install and run
+    - yarn install
+    - yarn start
 
 ## :computer: Used Technologies
 - React
@@ -26,6 +28,6 @@ A react application where I use Redux to interact with the global state. Items c
 3. *DONE* ~~Make buying items in the cart possible~~
 4. *DONE* ~~Handle the failed error request~~
 5. *DONE* ~~different view on screen width less then 480px~~
-6. *DELETED* ~~Create an easter egg in the app~~
-7. Implement user authentication (MongoDB or Auth0)
-8. Make avatar component with equipped items
+6. *DONE* ~~Create an easter egg in the app~~
+7. *DONE* ~~Implement user authentication (Auth0)~~
+<!-- 8. Make avatar component with equipped items -->
