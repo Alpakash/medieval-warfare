@@ -6,8 +6,19 @@ import TotalAmount from "../../TotalAmount";
 import { connect } from "react-redux";
 import GoldSVG from "../../../assets/images/svg-icons/ingots.svg?react";
 import { showDialog } from "../../../redux/actions/dialogActions";
-import { boughtItems, spendGold, cartGoldEqualToCurrentGold } from "./../../../redux/actions/userActions";
+import { boughtItems, spendGold, cartGoldEqualToCurrentGold } from "../../../redux/actions/userActions";
 import { DialogTitle } from "../../common/Typography";
+import { RootState } from "../../../types";
+
+interface DialogBoxProps {
+  dialogBox: RootState['dialogBox'];
+  showDialog: (show: boolean) => void;
+  boughtItems: typeof boughtItems;
+  user: RootState['user'];
+  spendGold: typeof spendGold;
+  totalPrice: RootState['totalPrice'];
+  cartGoldEqualToCurrentGold: typeof cartGoldEqualToCurrentGold;
+}
 
 let count = 0;
 
@@ -19,8 +30,8 @@ const DialogBox = ({
   spendGold,
   totalPrice,
   cartGoldEqualToCurrentGold,
-}) => {
-  const [requestError, setRequestError] = useState({});
+}: DialogBoxProps) => {
+  const [requestError, setRequestError] = useState<{ error?: string } | string>("");
   let itemsInCart = user.balance !== user.cartBalance;
 
   const handleBuy = () => {
@@ -46,13 +57,12 @@ const DialogBox = ({
     return new Promise((_, reject) => {
       setTimeout(() => reject(), Math.random() * 100);
     })
-      .then((response) => response.json())
+      .then((response) => response)
       .then((data) => console.log(data))
       .catch(() => {
-        // catch the failed request and set the error state to show in UI
         setRequestError({
           error:
-            "Hooray! Every 3th buy you get an error... Your request failed, try again ;-)",
+            "Hooray! Every 3rd buy you get an error... Your request failed, try again ;-)",
         });
       });
   };
@@ -75,15 +85,13 @@ const DialogBox = ({
           <strong>{user.cartBalance}</strong>&nbsp;in cart
         </span>
         <Items />
-        <span className="error">{requestError.error}</span>
+        <span className="error">{typeof requestError === 'object' ? requestError.error : requestError}</span>
         <TotalAmount />
       </Modal.Body>
       <Modal.Footer className="removeBorder">
         <Button
           variant="primary"
           className="buttonSize"
-          // didn't make the button disabled when total price exceeds the users gold,
-          // because the user is already restricted from adding more items if there is not enough gold
           disabled={!itemsInCart}
           onClick={() => handleBuy()}
         >
@@ -102,13 +110,12 @@ const DialogBox = ({
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState) => ({
   dialogBox: state.dialogBox,
   user: state.user,
   totalPrice: state.totalPrice,
 });
 
-// connect the redux store to component
 export default connect(mapStateToProps, {
   showDialog,
   boughtItems,

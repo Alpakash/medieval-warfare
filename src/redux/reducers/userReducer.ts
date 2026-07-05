@@ -6,8 +6,9 @@ import {
   GOLD_SPEND,
   CART_GOLD_TO_GOLD
 } from "../constants/types";
+import { UserState } from "../../types";
 
-const initialState = {
+const initialState: UserState = {
   id: 1,
   name: "Akash",
   login: "user1@example.com",
@@ -16,7 +17,7 @@ const initialState = {
   bought: false,
 };
 
-const user = (state = initialState, action) => {
+const user = (state = initialState, action: any) => {
   switch (action.type) {
     case INCREMENT_MY_GOLD:
       return {

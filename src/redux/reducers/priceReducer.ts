@@ -3,12 +3,13 @@ import {
   DECREMENT_TOTAL,
   CHANGE_TOTAL,
 } from "../constants/types";
+import { TotalPriceState } from "../../types";
 
-const initialState = {
+const initialState: TotalPriceState = {
   amount: 0,
 };
 
-const totalPrice = (state = initialState, action) => {
+const totalPrice = (state = initialState, action: any) => {
   switch (action.type) {
     case INCREMENT_TOTAL:
       return {

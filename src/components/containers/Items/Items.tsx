@@ -8,7 +8,7 @@ import {
   Error,
   ItemsParent,
   Quantity,
-} from "./styles.js";
+} from "./styles";
 import minus from "../../../assets/images/icons/minus.png";
 import plus from "../../../assets/images/icons/plus.png";
 import { connect } from "react-redux";
@@ -27,8 +27,9 @@ import {
   decrementGold,
   changeGold,
 } from "../../../redux/actions/userActions";
-import { sellItems, addToCart } from "./../../../redux/actions/buyActions";
+import { sellItems, addToCart } from "../../../redux/actions/buyActions";
 import { Text } from "../../common/Typography";
+import { RootState, Item as ItemType } from "../../../types";
 
 const Box = styled.span`
   height: 30px;
@@ -38,6 +39,23 @@ const Box = styled.span`
   align-items: center;
   justify-content: center;
 `;
+
+interface ItemsProps {
+  addItem: typeof addItem;
+  removeItem: typeof removeItem;
+  incrementTotal: typeof incrementTotal;
+  decrementTotal: typeof decrementTotal;
+  changeTotal: typeof changeTotal;
+  changeGold: typeof changeGold;
+  decrementGold: typeof decrementGold;
+  incrementGold: typeof incrementGold;
+  sellItems: typeof sellItems;
+  addToCart: typeof addToCart;
+  inputChanges: any;
+  items: ItemType[];
+  totalPrice: RootState['totalPrice'];
+  user: RootState['user'];
+}
 
 const Items = ({
   addItem,
@@ -54,11 +72,10 @@ const Items = ({
   items,
   totalPrice,
   user,
-}) => {
-  const [error, setError] = useState(null);
+}: ItemsProps) => {
+  const [error, setError] = useState<string | null>(null);
 
-  // handle removing item from cart by dispatching actions
-  const handleDecrementItem = (item, removeOnCart) => {
+  const handleDecrementItem = (item: ItemType, removeOnCart: number) => {
     if (item.quantity && item.inCart > 0) {
       removeItem(item.index, removeOnCart);
       decrementTotal(item);
@@ -68,8 +85,7 @@ const Items = ({
     setError("");
   };
 
-  // handle adding item from cart by dispatching actions
-  const handleIncrementItem = (item, addOneCart, user) => {
+  const handleIncrementItem = (item: ItemType, addOneCart: number, user: RootState['user']) => {
     if (item.quantity > 0) {
       if (item.price > user.cartBalance && item.price > user.balance) {
         setError("You have insufficient gold.");
@@ -85,11 +101,8 @@ const Items = ({
     }
   };
 
-  // input field not working correctly
-  const handleInputItem = (item, changeCart, user, total) => {
-    if (
-      user.cartBalance >= item.price * Number(changeCart)
-    ) {
+  const handleInputItem = (item: ItemType, changeCart: number, user: RootState['user'], total: RootState['totalPrice']) => {
+    if (user.cartBalance >= item.price * Number(changeCart)) {
       inputChanges(item, Number(changeCart));
       changeTotal(item, Number(changeCart));
       changeGold(item, Number(changeCart), total);
@@ -125,12 +138,12 @@ const Items = ({
             </Box>
             <Input
               type="text"
-              value={item.inCart}
+              value={item.inCart as any}
               onChange={(e) =>
-                handleInputItem(item, e.target.value, user, totalPrice)
+                handleInputItem(item, Number(e.target.value), user, totalPrice)
               }
               className="text-center"
-              maxLength="3"
+              maxLength={3}
             />
 
             <Box onClick={() => handleIncrementItem(item, 1, user)}>
@@ -146,13 +159,12 @@ const Items = ({
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState) => ({
   items: state.items,
   user: state.user,
   totalPrice: state.totalPrice,
 });
 
-// connect the redux store to component
 export default connect(mapStateToProps, {
   addItem,
   removeItem,

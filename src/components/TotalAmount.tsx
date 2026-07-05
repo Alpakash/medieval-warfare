@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from "react-redux";
+import { RootState } from '../types';
 
 const Total = styled.div`
 display: flex;
@@ -9,7 +10,12 @@ font-weight: bold;
 margin: 40px 0 60px 0;
 `;
 
-const TotalAmount = ({totalPrice}) => {
+interface TotalAmountProps {
+  totalPrice?: RootState['totalPrice'];
+}
+
+const TotalAmount = ({totalPrice}: TotalAmountProps) => {
+    if (!totalPrice) return null;
 
     return (
         <Total>
@@ -19,7 +25,7 @@ const TotalAmount = ({totalPrice}) => {
     );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState) => ({
   totalPrice: state.totalPrice,
 });
 

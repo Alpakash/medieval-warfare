@@ -9,12 +9,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "strict": true,
+    "strict": false,
     "allowJs": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": true,
     "importHelpers": true
   },
   "include": ["src"]

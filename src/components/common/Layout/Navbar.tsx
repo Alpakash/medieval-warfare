@@ -10,8 +10,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "../../LoginButton";
 import LogoutButton from "../../LogoutButton";
 import logo from "../../../assets/images/logo-cross-swords.png";
+import { RootState } from "../../../types";
 
-const NavbarComponent = ({ user, showDialog }) => {
+interface NavbarProps {
+  user: RootState['user'];
+  showDialog: (show: boolean) => void;
+}
+
+const NavbarComponent = ({ user, showDialog }: NavbarProps) => {
   const { isAuthenticated } = useAuth0();
 
   return (
@@ -55,4 +61,8 @@ const NavbarComponent = ({ user, showDialog }) => {
   );
 };
 
-export default connect(null, { showDialog })(NavbarComponent);
+const mapStateToProps = (state: RootState) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, { showDialog })(NavbarComponent);

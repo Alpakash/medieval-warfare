@@ -3,16 +3,21 @@ import { connect } from "react-redux";
 import { BigText, ItemText } from "../../common/Typography";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./styles.css";
+import { RootState } from "../../../types";
 
-const Home = ({ user, buy, dialogBox }) => {
+interface HomeProps {
+  user: RootState['user'];
+  buy: RootState['buy'];
+  dialogBox: RootState['dialogBox'];
+}
+
+const Home = ({ user, buy, dialogBox }: HomeProps) => {
   const { user: users, isAuthenticated, isLoading } = useAuth0();
 
-  var bought = buy.reduce((acc, cur) => {
-    // check the item name in the current array, if there is none make it 0, if it's already a number higher then 0
-    // get the accumulator (last initialState) and search the item name to add one to it
+  let bought: Record<string, number> = buy.reduce((acc, cur) => {
     acc[cur.name] = (acc[cur.name] ?? 0) + 1;
     return acc;
-  }, {});
+  }, {} as Record<string, number>);
 
   return (
     <>
@@ -25,8 +30,6 @@ const Home = ({ user, buy, dialogBox }) => {
             <ul>
               <BigText>Inventory</BigText>
               {user.bought && !dialogBox.show ? (
-                /* map through the 'bought' objects key values
-              to show the number of items and item name */
                 Object.entries(bought).map(([key, value], index) => {
                   return (
                     <li key={index}>
@@ -56,7 +59,7 @@ const Home = ({ user, buy, dialogBox }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootState) => ({
   user: state.user,
   buy: state.buy,
   dialogBox: state.dialogBox,

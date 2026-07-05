@@ -1,10 +1,11 @@
 import { SHOW_DIALOG } from "../constants/types";
+import { DialogBoxState } from "../../types";
 
-const initialState = {
+const initialState: DialogBoxState = {
   show: false
 };
 
-const dialogBox = (state = initialState, action) => {
+const dialogBox = (state = initialState, action: any) => {
   switch (action.type) {
     case SHOW_DIALOG:
       return {
