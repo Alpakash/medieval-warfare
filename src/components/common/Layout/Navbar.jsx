@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, Navbar, Container } from "react-bootstrap";
-import { ReactComponent as GoldSVG } from "../../../assets/images/svg-icons/ingots.svg";
-import { ReactComponent as AvatarSVG } from "../../../assets/images/svg-icons/gamer.svg";
+import GoldSVG from "../../../assets/images/svg-icons/ingots.svg?react";
+import AvatarSVG from "../../../assets/images/svg-icons/gamer.svg?react";
 import { showDialog } from "../../../redux/actions/dialogActions";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -9,6 +9,7 @@ import "./styles.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "../../LoginButton";
 import LogoutButton from "../../LogoutButton";
+import logo from "../../../assets/images/logo-cross-swords.png";
 
 const NavbarComponent = ({ user, showDialog }) => {
   const { isAuthenticated } = useAuth0();
@@ -16,7 +17,16 @@ const NavbarComponent = ({ user, showDialog }) => {
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Medieval Warfare</Navbar.Brand>
+        <Navbar.Brand href="#home">
+          <img
+            src={logo}
+            width="30"
+            height="30"
+            className="d-inline-block align-top mr-2"
+            alt="Medieval Warfare logo"
+          />
+          Medieval Warfare
+        </Navbar.Brand>
         {isAuthenticated ? (
           <>
             <Nav className="mr-auto">

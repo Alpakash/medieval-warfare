@@ -109,7 +109,7 @@ const Items = ({
         >
           <Item>
             <Image
-              src={require(`../../../assets/images/items/${item.image}`)}
+              src={item.imageUrl}
               alt={item.name}
             />
             <Text>{item.name}</Text>

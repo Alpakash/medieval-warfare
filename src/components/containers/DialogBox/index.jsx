@@ -4,7 +4,7 @@ import "./styles.css";
 import Items from "../Items/Items";
 import TotalAmount from "../../TotalAmount";
 import { connect } from "react-redux";
-import { ReactComponent as GoldSVG } from "../../../assets/images/svg-icons/ingots.svg";
+import GoldSVG from "../../../assets/images/svg-icons/ingots.svg?react";
 import { showDialog } from "../../../redux/actions/dialogActions";
 import { boughtItems, spendGold, cartGoldEqualToCurrentGold } from "./../../../redux/actions/userActions";
 import { DialogTitle } from "../../common/Typography";

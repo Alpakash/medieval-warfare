@@ -1,4 +1,8 @@
 import { ADD_ITEM, REMOVE_ITEM, INPUT_CHANGE } from "../constants/types";
+import battleAxe from "../../assets/images/items/battle_axe.png";
+import woodenShield from "../../assets/images/items/wooden_shield.png";
+import bronzeSword from "../../assets/images/items/bronze_sword.png";
+import longsword from "../../assets/images/items/longsword.png";
 
 const initialState = [
   {
@@ -8,6 +12,7 @@ const initialState = [
     price: 120,
     quantity: 20,
     image: "battle_axe.png",
+    imageUrl: battleAxe,
     inCart: 0,
   },
   {
@@ -17,6 +22,7 @@ const initialState = [
     price: 150,
     quantity: 50,
     image: "wooden_shield.png",
+    imageUrl: woodenShield,
     inCart: 0,
   },
   {
@@ -26,6 +32,7 @@ const initialState = [
     price: 110,
     quantity: 100,
     image: "bronze_sword.png",
+    imageUrl: bronzeSword,
     inCart: 0,
   },
   {
@@ -35,6 +42,7 @@ const initialState = [
     price: 310,
     quantity: 10,
     image: "longsword.png",
+    imageUrl: longsword,
     inCart: 0,
   },
 ];
