@@ -1,6 +1,6 @@
-import { StateCreator } from "zustand";
-import { UserState, Item, TotalPriceState } from "../../types";
-import { StoreState } from "../index";
+import type { StateCreator } from "zustand";
+import type { StoreState } from "../index";
+import type { UserState, Item, TotalPriceState } from "@/types";
 
 export interface UserSlice {
   user: UserState;
@@ -11,9 +11,9 @@ export interface UserSlice {
     changeCart: number,
     totalPrice: TotalPriceState
   ) => void;
-  boughtItems: (bought?: any) => void;
+  boughtItems: () => void;
   spendGold: (totalPrice: TotalPriceState) => void;
-  cartGoldEqualToCurrentGold: (items?: any) => void;
+  cartGoldEqualToCurrentGold: () => void;
 }
 
 const initialUser: UserState = {

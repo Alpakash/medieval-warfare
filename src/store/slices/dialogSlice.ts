@@ -1,6 +1,6 @@
-import { StateCreator } from "zustand";
-import { DialogBoxState } from "../../types";
-import { StoreState } from "../index";
+import type { StateCreator } from "zustand";
+import type { StoreState } from "../index";
+import type { DialogBoxState } from "@/types";
 
 export interface DialogSlice {
   dialogBox: DialogBoxState;

@@ -1,11 +1,11 @@
-import { StateCreator } from "zustand";
-import { Item } from "../../types";
-import { StoreState } from "../index";
+import type { StateCreator } from "zustand";
+import type { StoreState } from "../index";
+import type { Item } from "@/types";
 
 export interface BuySlice {
   buy: Item[];
   sellItems: (itemsInCart: Item) => void;
-  addToCart: (itemsInCart: Item, inputValue?: number, _extra?: any) => void;
+  addToCart: (itemsInCart: Item, inputValue?: number) => void;
 }
 
 export const createBuySlice: StateCreator<
@@ -18,6 +18,7 @@ export const createBuySlice: StateCreator<
   sellItems: (itemsInCart) =>
     set((state) => {
       const index = state.buy.findIndex((item) => item.id === itemsInCart.id);
+      if (index === -1) return { buy: state.buy };
       return {
         buy: [...state.buy.slice(0, index), ...state.buy.slice(index + 1)],
       };

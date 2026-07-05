@@ -1,6 +1,6 @@
-import { StateCreator } from "zustand";
-import { TotalPriceState, Item } from "../../types";
-import { StoreState } from "../index";
+import type { StateCreator } from "zustand";
+import type { StoreState } from "../index";
+import type { TotalPriceState, Item } from "@/types";
 
 export interface PriceSlice {
   totalPrice: TotalPriceState;
