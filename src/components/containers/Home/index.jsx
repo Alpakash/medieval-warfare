@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { BigText, ItemText } from "../../common/Typography";
 import { useAuth0 } from "@auth0/auth0-react";
+import "./styles.css";
 
 const Home = ({ user, buy, dialogBox }) => {
   const { user: users, isAuthenticated, isLoading } = useAuth0();
@@ -44,7 +45,12 @@ const Home = ({ user, buy, dialogBox }) => {
               )}
             </ul>
           </>
-        ) : <BigText>Login to use the app and buy some awesome items!</BigText>}
+        ) : <>
+        <div className="hi"></div>
+        <BigText>Login to use the app and buy some awesome items!</BigText>
+        </>
+        
+        }
       </div>
     </>
   );
