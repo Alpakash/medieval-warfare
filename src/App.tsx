@@ -1,23 +1,22 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Footer from "./components/common/Layout/Footer";
-import DialogBox from "./components/containers/DialogBox";
-import NavbarComponent from "./components/common/Layout/Navbar";
-import Home from "./components/containers/Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Footer from "./components/layout/Footer";
+import DialogBox from "./components/features/shop/DialogBox";
+import Navbar from "./components/layout/Navbar";
+import Home from "./components/features/inventory/Home";
 
 const App = () => {
-  const routes = [{ path: "/", component: Home }];
-
   return (
     <Router>
-      <NavbarComponent />
-      <DialogBox />
-      <Switch>
-        {routes.map((route, index) => (
-          <Route key={index} path={route.path} component={route.component} />
-        ))}
-      </Switch>
-      <Footer />
+      <div className="min-h-screen bg-background flex flex-col">
+        <Navbar />
+        <DialogBox />
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </Router>
   );
 };

@@ -1,28 +1,9 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import {
-  Item,
-  Image,
-  goldMargin,
-  Input,
-  Error,
-  ItemsParent,
-  Quantity,
-} from "./styles";
-import minus from "../../../assets/images/icons/minus.png";
-import plus from "../../../assets/images/icons/plus.png";
-import { Text } from "../../common/Typography";
-import { useStore } from "../../../store";
-import { Item as ItemType, UserState, TotalPriceState } from "../../../types";
-
-const Box = styled.span`
-  height: 30px;
-  width: 30px;
-  background-color: lightgrey;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useStore } from "@/store";
+import type { Item, UserState, TotalPriceState } from "@/types";
+import minus from "@/assets/images/icons/minus.png";
+import plus from "@/assets/images/icons/plus.png";
 
 const Items = () => {
   const items = useStore((state) => state.items);
@@ -43,7 +24,7 @@ const Items = () => {
 
   const [error, setError] = useState<string | null>(null);
 
-  const handleDecrementItem = (item: ItemType, removeOnCart: number) => {
+  const handleDecrementItem = (item: Item, removeOnCart: number) => {
     if (item.quantity && item.inCart > 0) {
       removeItem(item.index, removeOnCart);
       decrementTotal(item);
@@ -53,7 +34,11 @@ const Items = () => {
     setError("");
   };
 
-  const handleIncrementItem = (item: ItemType, addOneCart: number, user: UserState) => {
+  const handleIncrementItem = (
+    item: Item,
+    addOneCart: number,
+    user: UserState
+  ) => {
     if (item.quantity > 0) {
       if (item.price > user.cartBalance && item.price > user.balance) {
         setError("You have insufficient gold.");
@@ -70,7 +55,7 @@ const Items = () => {
   };
 
   const handleInputItem = (
-    item: ItemType,
+    item: Item,
     changeCart: number,
     user: UserState,
     total: TotalPriceState
@@ -79,7 +64,7 @@ const Items = () => {
       inputChanges(item, Number(changeCart));
       changeTotal(item, Number(changeCart));
       changeGold(item, Number(changeCart), total);
-      addToCart(item, Number(changeCart), user);
+      addToCart(item, Number(changeCart));
       setError("");
     } else {
       setError("You have insufficient gold to buy that amount of items...");
@@ -87,48 +72,58 @@ const Items = () => {
   };
 
   return (
-    <ItemsParent>
+    <div className="space-y-4">
       {items.map((item) => (
         <div
           key={item.id}
-          className="d-flex justify-content-between itemMargin"
+          className="flex justify-between items-center border-b pb-2"
         >
-          <Item>
-            <Image
+          <div className="flex items-center gap-3 overflow-hidden">
+            <img
               src={item.imageUrl}
               alt={item.name}
+              className="w-12 h-12 object-cover rounded"
             />
-            <Text>{item.name}</Text>
-            <Quantity>
-              &nbsp; <strong>/</strong> &nbsp;
-              <Text>{item.quantity} items left</Text>
-            </Quantity>
-          </Item>
+            <div className="overflow-hidden">
+              <span className="font-medium block truncate">{item.name}</span>
+              <span className="text-sm text-muted-foreground">
+                {item.quantity} items left
+              </span>
+            </div>
+          </div>
 
-          <div className="d-flex align-self-center">
-            <Box onClick={() => handleDecrementItem(item, 1)}>
-              <img src={minus} alt="Minus" />
-            </Box>
-            <Input
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handleDecrementItem(item, 1)}
+            >
+              <img src={minus} alt="Minus" className="w-4 h-4" />
+            </Button>
+            <input
               type="text"
-              value={item.inCart as any}
+              value={item.inCart}
               onChange={(e) =>
                 handleInputItem(item, Number(e.target.value), user, totalPrice)
               }
-              className="text-center"
+              className="w-12 h-9 text-center border rounded-md"
               maxLength={3}
             />
-
-            <Box onClick={() => handleIncrementItem(item, 1, user)}>
-              <img src={plus} alt="Plus" />
-            </Box>
-
-            <Text style={goldMargin}>{item.price} gold</Text>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => handleIncrementItem(item, 1, user)}
+            >
+              <img src={plus} alt="Plus" className="w-4 h-4" />
+            </Button>
+            <span className="ml-2 text-sm font-medium">{item.price} gold</span>
           </div>
         </div>
       ))}
-      <Error>{error}</Error>
-    </ItemsParent>
+      {error && (
+        <p className="text-sm text-destructive italic">{error}</p>
+      )}
+    </div>
   );
 };
 
