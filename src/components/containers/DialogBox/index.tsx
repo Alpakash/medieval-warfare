@@ -3,34 +3,21 @@ import { Button, Modal } from "react-bootstrap";
 import "./styles.css";
 import Items from "../Items/Items";
 import TotalAmount from "../../TotalAmount";
-import { connect } from "react-redux";
 import GoldSVG from "../../../assets/images/svg-icons/ingots.svg?react";
-import { showDialog } from "../../../redux/actions/dialogActions";
-import { boughtItems, spendGold, cartGoldEqualToCurrentGold } from "../../../redux/actions/userActions";
 import { DialogTitle } from "../../common/Typography";
-import { RootState } from "../../../types";
-
-interface DialogBoxProps {
-  dialogBox: RootState['dialogBox'];
-  showDialog: (show: boolean) => void;
-  boughtItems: typeof boughtItems;
-  user: RootState['user'];
-  spendGold: typeof spendGold;
-  totalPrice: RootState['totalPrice'];
-  cartGoldEqualToCurrentGold: typeof cartGoldEqualToCurrentGold;
-}
+import { useStore } from "../../../store";
 
 let count = 0;
 
-const DialogBox = ({
-  dialogBox,
-  showDialog,
-  boughtItems,
-  user,
-  spendGold,
-  totalPrice,
-  cartGoldEqualToCurrentGold,
-}: DialogBoxProps) => {
+const DialogBox = () => {
+  const dialogBox = useStore((state) => state.dialogBox);
+  const user = useStore((state) => state.user);
+  const totalPrice = useStore((state) => state.totalPrice);
+  const showDialog = useStore((state) => state.showDialog);
+  const boughtItems = useStore((state) => state.boughtItems);
+  const spendGold = useStore((state) => state.spendGold);
+  const cartGoldEqualToCurrentGold = useStore((state) => state.cartGoldEqualToCurrentGold);
+
   const [requestError, setRequestError] = useState<{ error?: string } | string>("");
   let itemsInCart = user.balance !== user.cartBalance;
 
@@ -110,15 +97,4 @@ const DialogBox = ({
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  dialogBox: state.dialogBox,
-  user: state.user,
-  totalPrice: state.totalPrice,
-});
-
-export default connect(mapStateToProps, {
-  showDialog,
-  boughtItems,
-  spendGold,
-  cartGoldEqualToCurrentGold,
-})(DialogBox);
+export default DialogBox;

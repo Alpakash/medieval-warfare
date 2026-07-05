@@ -2,23 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "./index.css";
-import ConnectedApp from "./App";
-import { Provider } from "react-redux";
-import { store } from './redux/store';
+import App from "./App";
 import { Auth0Provider } from "@auth0/auth0-react";
 
 const AppWrapper = () => {
   return (
     <React.StrictMode>
-      <Provider store={store}>
-        <Auth0Provider
-          domain="dev-b05m8z8tgzdg54zf.eu.auth0.com"
-          clientId="5VLLouhHaPqSaMTp9vATrEo0h0wVAqcl"
-          redirectUri={window.location.origin}
-        >
-          <ConnectedApp {...({} as any)} />
-        </Auth0Provider>
-      </Provider>
+      <Auth0Provider
+        domain="dev-b05m8z8tgzdg54zf.eu.auth0.com"
+        clientId="5VLLouhHaPqSaMTp9vATrEo0h0wVAqcl"
+        redirectUri={window.location.origin}
+      >
+        <App />
+      </Auth0Provider>
     </React.StrictMode>
   );
 };

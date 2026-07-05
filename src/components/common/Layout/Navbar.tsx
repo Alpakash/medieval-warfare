@@ -2,23 +2,18 @@ import React from "react";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import GoldSVG from "../../../assets/images/svg-icons/ingots.svg?react";
 import AvatarSVG from "../../../assets/images/svg-icons/gamer.svg?react";
-import { showDialog } from "../../../redux/actions/dialogActions";
-import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import "./styles.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "../../LoginButton";
 import LogoutButton from "../../LogoutButton";
 import logo from "../../../assets/images/logo-cross-swords.png";
-import { RootState } from "../../../types";
+import { useStore } from "../../../store";
 
-interface NavbarProps {
-  user: RootState['user'];
-  showDialog: (show: boolean) => void;
-}
-
-const NavbarComponent = ({ user, showDialog }: NavbarProps) => {
+const NavbarComponent = () => {
   const { isAuthenticated } = useAuth0();
+  const user = useStore((state) => state.user);
+  const showDialog = useStore((state) => state.showDialog);
 
   return (
     <Navbar bg="dark" variant="dark">
@@ -61,8 +56,4 @@ const NavbarComponent = ({ user, showDialog }: NavbarProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  user: state.user,
-});
-
-export default connect(mapStateToProps, { showDialog })(NavbarComponent);
+export default NavbarComponent;

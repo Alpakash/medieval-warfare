@@ -11,25 +11,9 @@ import {
 } from "./styles";
 import minus from "../../../assets/images/icons/minus.png";
 import plus from "../../../assets/images/icons/plus.png";
-import { connect } from "react-redux";
-import {
-  addItem,
-  removeItem,
-  inputChanges,
-} from "../../../redux/actions/itemActions";
-import {
-  incrementTotal,
-  decrementTotal,
-  changeTotal,
-} from "../../../redux/actions/priceActions";
-import {
-  incrementGold,
-  decrementGold,
-  changeGold,
-} from "../../../redux/actions/userActions";
-import { sellItems, addToCart } from "../../../redux/actions/buyActions";
 import { Text } from "../../common/Typography";
-import { RootState, Item as ItemType } from "../../../types";
+import { useStore } from "../../../store";
+import { Item as ItemType, UserState, TotalPriceState } from "../../../types";
 
 const Box = styled.span`
   height: 30px;
@@ -40,39 +24,23 @@ const Box = styled.span`
   justify-content: center;
 `;
 
-interface ItemsProps {
-  addItem: typeof addItem;
-  removeItem: typeof removeItem;
-  incrementTotal: typeof incrementTotal;
-  decrementTotal: typeof decrementTotal;
-  changeTotal: typeof changeTotal;
-  changeGold: typeof changeGold;
-  decrementGold: typeof decrementGold;
-  incrementGold: typeof incrementGold;
-  sellItems: typeof sellItems;
-  addToCart: typeof addToCart;
-  inputChanges: any;
-  items: ItemType[];
-  totalPrice: RootState['totalPrice'];
-  user: RootState['user'];
-}
+const Items = () => {
+  const items = useStore((state) => state.items);
+  const user = useStore((state) => state.user);
+  const totalPrice = useStore((state) => state.totalPrice);
 
-const Items = ({
-  addItem,
-  removeItem,
-  incrementTotal,
-  decrementTotal,
-  changeTotal,
-  changeGold,
-  decrementGold,
-  incrementGold,
-  sellItems,
-  addToCart,
-  inputChanges,
-  items,
-  totalPrice,
-  user,
-}: ItemsProps) => {
+  const addItem = useStore((state) => state.addItem);
+  const removeItem = useStore((state) => state.removeItem);
+  const inputChanges = useStore((state) => state.inputChanges);
+  const incrementTotal = useStore((state) => state.incrementTotal);
+  const decrementTotal = useStore((state) => state.decrementTotal);
+  const changeTotal = useStore((state) => state.changeTotal);
+  const changeGold = useStore((state) => state.changeGold);
+  const decrementGold = useStore((state) => state.decrementGold);
+  const incrementGold = useStore((state) => state.incrementGold);
+  const sellItems = useStore((state) => state.sellItems);
+  const addToCart = useStore((state) => state.addToCart);
+
   const [error, setError] = useState<string | null>(null);
 
   const handleDecrementItem = (item: ItemType, removeOnCart: number) => {
@@ -85,7 +53,7 @@ const Items = ({
     setError("");
   };
 
-  const handleIncrementItem = (item: ItemType, addOneCart: number, user: RootState['user']) => {
+  const handleIncrementItem = (item: ItemType, addOneCart: number, user: UserState) => {
     if (item.quantity > 0) {
       if (item.price > user.cartBalance && item.price > user.balance) {
         setError("You have insufficient gold.");
@@ -101,7 +69,12 @@ const Items = ({
     }
   };
 
-  const handleInputItem = (item: ItemType, changeCart: number, user: RootState['user'], total: RootState['totalPrice']) => {
+  const handleInputItem = (
+    item: ItemType,
+    changeCart: number,
+    user: UserState,
+    total: TotalPriceState
+  ) => {
     if (user.cartBalance >= item.price * Number(changeCart)) {
       inputChanges(item, Number(changeCart));
       changeTotal(item, Number(changeCart));
@@ -159,22 +132,4 @@ const Items = ({
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  items: state.items,
-  user: state.user,
-  totalPrice: state.totalPrice,
-});
-
-export default connect(mapStateToProps, {
-  addItem,
-  removeItem,
-  incrementTotal,
-  decrementTotal,
-  changeTotal,
-  changeGold,
-  incrementGold,
-  decrementGold,
-  sellItems,
-  addToCart,
-  inputChanges,
-})(Items);
+export default Items;

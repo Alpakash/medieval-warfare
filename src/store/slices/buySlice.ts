@@ -1,0 +1,32 @@
+import { StateCreator } from "zustand";
+import { Item } from "../../types";
+import { StoreState } from "../index";
+
+export interface BuySlice {
+  buy: Item[];
+  sellItems: (itemsInCart: Item) => void;
+  addToCart: (itemsInCart: Item, inputValue?: number, _extra?: any) => void;
+}
+
+export const createBuySlice: StateCreator<
+  StoreState,
+  [],
+  [],
+  BuySlice
+> = (set) => ({
+  buy: [],
+  sellItems: (itemsInCart) =>
+    set((state) => {
+      const index = state.buy.findIndex((item) => item.id === itemsInCart.id);
+      return {
+        buy: [...state.buy.slice(0, index), ...state.buy.slice(index + 1)],
+      };
+    }),
+  addToCart: (itemsInCart, inputValue) =>
+    set((state) => {
+      const newBuy = [...state.buy];
+      for (let i = 1; i < (inputValue ?? 1); i++) newBuy.push(itemsInCart);
+      newBuy.push(itemsInCart);
+      return { buy: newBuy };
+    }),
+});

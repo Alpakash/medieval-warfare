@@ -1,18 +1,14 @@
 import React from "react";
-import { connect } from "react-redux";
 import { BigText, ItemText } from "../../common/Typography";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./styles.css";
-import { RootState } from "../../../types";
+import { useStore } from "../../../store";
 
-interface HomeProps {
-  user: RootState['user'];
-  buy: RootState['buy'];
-  dialogBox: RootState['dialogBox'];
-}
-
-const Home = ({ user, buy, dialogBox }: HomeProps) => {
+const Home = () => {
   const { user: users, isAuthenticated, isLoading } = useAuth0();
+  const user = useStore((state) => state.user);
+  const buy = useStore((state) => state.buy);
+  const dialogBox = useStore((state) => state.dialogBox);
 
   let bought: Record<string, number> = buy.reduce((acc, cur) => {
     acc[cur.name] = (acc[cur.name] ?? 0) + 1;
@@ -22,8 +18,8 @@ const Home = ({ user, buy, dialogBox }: HomeProps) => {
   return (
     <>
       <div className="container body-content mt-5">
-        {isLoading ? <BigText>Loading...</BigText> 
-        : isAuthenticated 
+        {isLoading ? <BigText>Loading...</BigText>
+        : isAuthenticated
         ? (
           <>
             <br/>
@@ -52,17 +48,11 @@ const Home = ({ user, buy, dialogBox }: HomeProps) => {
         <div className="hi"></div>
         <BigText>Login to use the app and buy some awesome items!</BigText>
         </>
-        
+
         }
       </div>
     </>
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  user: state.user,
-  buy: state.buy,
-  dialogBox: state.dialogBox,
-});
-
-export default connect(mapStateToProps, null)(Home);
+export default Home;

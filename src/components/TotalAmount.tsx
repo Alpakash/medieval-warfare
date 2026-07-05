@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from "react-redux";
-import { RootState } from '../types';
+import { useStore } from '../store';
 
 const Total = styled.div`
 display: flex;
@@ -10,23 +9,15 @@ font-weight: bold;
 margin: 40px 0 60px 0;
 `;
 
-interface TotalAmountProps {
-  totalPrice?: RootState['totalPrice'];
-}
-
-const TotalAmount = ({totalPrice}: TotalAmountProps) => {
-    if (!totalPrice) return null;
+const TotalAmount = () => {
+    const totalPrice = useStore((state) => state.totalPrice);
 
     return (
         <Total>
-           <div>Total</div> 
+           <div>Total</div>
            <div>{totalPrice.amount} gold</div>
         </Total>
     );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  totalPrice: state.totalPrice,
-});
-
-export default connect(mapStateToProps, null)(TotalAmount);
+export default TotalAmount;
