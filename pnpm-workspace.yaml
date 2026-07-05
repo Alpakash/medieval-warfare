@@ -1,6 +1,0 @@
-allowBuilds:
-  '@swc/core': true
-  browser-tabs-lock: false
-  core-js: false
-  core-js-pure: false
-  es5-ext: false
